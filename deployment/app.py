@@ -42,7 +42,6 @@ MonthlyIncome = st.number_input("Monthly Income",min_value=100, max_value=100000
 
 
 # Assemble input into DataFrame
----
 input_data = pd.DataFrame([{
     "Age": Age,
     "TypeofContact": TypeofContact,
