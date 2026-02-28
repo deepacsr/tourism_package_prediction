@@ -18,7 +18,7 @@ st.write("""
 This application predicts if Customer is likely to purchase newly introduced  Wellness tourism package.
 """)
 
-# User input
+# User input for Categorical variables
 TypeofContact = st.selectbox("Type of Contact", ["Company Invited", "Self Enquiry"])
 Occupation = st.selectbox("Occupation", ["Salaried", "Free Lancer", "Small Business","Large Business"])
 Gender = st.selectbox("Gender", ["Male", "Female"])
@@ -30,6 +30,8 @@ PreferredPropertyStar = st.selectbox("Preferred Property Star", [3, 4, 5])
 OwnCar = st.selectbox("Own Car", ["Yes", "No"])
 Passport = st.selectbox("Passport", ["Yes", "No"])
 
+# For numerical variables, Min and Max value taken based on the current data available.
+# Default value set at mean value
 Age = st.number_input("Age", min_value=18, max_value=70, value=30, step =2)
 DurationOfPitch = st.number_input("Duration Of Pitch(in Minutes)",min_value=5, max_value=127, value=15, step =5)
 NumberOfPersonVisiting = st.number_input("Number Of Person Visiting",min_value=1, max_value=5, value=3, step =1)
@@ -65,7 +67,19 @@ input_data = pd.DataFrame([{
 
 
 # Predict button
+
+#if st.button("Predict Revenue"):
+#    prediction = model.predict(input_data)[0]
+ #   st.subheader("Prediction Result:")
+  #  st.success(f"Customer will buy: **${prediction:,.2f} ")
+
+
 if st.button("Predict Revenue"):
     prediction = model.predict(input_data)[0]
+
     st.subheader("Prediction Result:")
-    st.success(f"Customer will buy: **${prediction:,.2f} ")
+
+    if prediction == 1:
+        st.success("Customer is LIKELY to purchase the package")
+    else:
+        st.warning("Customer is UNLIKELY to purchase the package")
