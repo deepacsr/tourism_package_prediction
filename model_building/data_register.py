@@ -10,7 +10,7 @@ repo_type = "dataset"
 #Reding the secret token for Hugging face from the Git Hub enviromnet
 api = HfApi(token=os.getenv("HF_TOKEN_TOURIST"))
 
-Step 1: Check if the space exists, else create it.
+#Step 1: Check if the space exists, else create it.
 try:
     api.repo_info(repo_id=repo_id, repo_type=repo_type)
     print(f"Space '{repo_id}' already exists. Using it.")
