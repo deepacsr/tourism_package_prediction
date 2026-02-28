@@ -98,6 +98,7 @@ ytest.to_csv("ytest.csv",index=False)
 
 files = ["Xtrain.csv","Xtest.csv","ytrain.csv","ytest.csv"]
 
+# Uploading 
 for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,
