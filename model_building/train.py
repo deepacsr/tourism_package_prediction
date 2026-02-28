@@ -44,8 +44,8 @@ numeric_cols = [
     'PitchSatisfactionScore', # Score indicating the customer's satisfaction with the sales pitch
     'NumberOfFollowups', # Total number of follow-ups by the salesperson after the sales pitch
     'DurationOfPitch', # Duration of the sales pitch delivered to the customer
-    'Passport', # Whether the customer holds a valid passport     
-    'OwnCar' # Whether the customer owns a car 
+    'Passport', # Whether the customer holds a valid passport
+    'OwnCar' # Whether the customer owns a car
 ]
 # Passport and Owncar which are Binary categorical columns here are numeric in nature
 
@@ -75,10 +75,10 @@ xgb_model = xgb.XGBClassifier(scale_pos_weight=class_weight, random_state=42)
 # Define hyperparameter grid
 param_grid = {
     'xgbclassifier__n_estimators': [50, 75, 100],
-   # 'xgbclassifier__max_depth': [2, 3, 4],
-    #'xgbclassifier__colsample_bytree': [0.4, 0.5, 0.6],
-    #'xgbclassifier__colsample_bylevel': [0.4, 0.5, 0.6],
-    #'xgbclassifier__learning_rate': [0.01, 0.05, 0.1],
+    'xgbclassifier__max_depth': [2, 3, 4],
+    'xgbclassifier__colsample_bytree': [0.4, 0.5, 0.6],
+    'xgbclassifier__colsample_bylevel': [0.4, 0.5, 0.6],
+    'xgbclassifier__learning_rate': [0.01, 0.05, 0.1],
     #'xgbclassifier__reg_lambda': [0.4, 0.5, 0.6],
 }
 

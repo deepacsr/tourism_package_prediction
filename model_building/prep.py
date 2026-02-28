@@ -17,7 +17,7 @@ from sklearn.preprocessing import LabelEncoder
 # for hugging face space authentication to upload files
 from huggingface_hub import login, HfApi
 
-# Define constants for the dataset and output paths
+# LOAD DATASET FROM HUGGING FACE
 api = HfApi(token=os.getenv("HF_TOKEN_TOURIST"))
 DATASET_PATH = "hf://datasets/deepacsr/tourism-package-prediction/tourism.csv"
 df = pd.read_csv(DATASET_PATH)
@@ -57,8 +57,8 @@ numeric_cols = [
     'PitchSatisfactionScore', # Score indicating the customer's satisfaction with the sales pitch
     'NumberOfFollowups', # Total number of follow-ups by the salesperson after the sales pitch
     'DurationOfPitch', # Duration of the sales pitch delivered to the customer
-    'Passport', # Whether the customer holds a valid passport     
-    'OwnCar' # Whether the customer owns a car 
+    'Passport', # Whether the customer holds a valid passport
+    'OwnCar' # Whether the customer owns a car
 ]
 # Passport and Owncar which are Binary categorical columns here are numeric in nature
 
@@ -70,7 +70,7 @@ categorical_cols = [
     'ProductPitched', # The type of product pitched to the customer
     'MaritalStatus', # Marital status of the customer (Single, Married, Divorced)
     'Designation'# Customer's designation in their current organization
-    
+
 ]
 
 # Imputation done based on column type
@@ -98,7 +98,7 @@ ytest.to_csv("ytest.csv",index=False)
 
 files = ["Xtrain.csv","Xtest.csv","ytrain.csv","ytest.csv"]
 
-# Uploading 
+# Uploading
 for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,

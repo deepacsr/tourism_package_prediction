@@ -5,8 +5,8 @@ import joblib
 
 import streamlit as st
 
-st.title("Test App Running")
-st.write("If you see this, Docker is fine.")
+#st.title("Test App Running")
+#st.write("If you see this, Docker is fine.")
 
 # Download and load the trained model
 model_path = hf_hub_download(repo_id="deepacsr/tourism-package-prediction", filename="best_package_prediction_model_v1.joblib")
