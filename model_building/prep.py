@@ -20,6 +20,8 @@ from huggingface_hub import login, HfApi
 # LOAD DATASET FROM HUGGING FACE
 api = HfApi(token=os.getenv("HF_TOKEN_TOURIST"))
 DATASET_PATH = "hf://datasets/deepacsr/tourism-package-prediction/tourism.csv"
+
+# Read the data in to panda frame
 df = pd.read_csv(DATASET_PATH)
 print("Dataset loaded successfully.")
 
@@ -36,7 +38,7 @@ target_col = 'ProdTaken'
 X = df.drop(columns=[target_col])
 y = df[target_col]
 
-# Perform train-test split
+# Perform train-test split using standard ratio 80:20
 Xtrain, Xtest, ytrain, ytest = train_test_split(
     X, y, test_size=0.2, random_state=56
 )
@@ -98,7 +100,8 @@ ytest.to_csv("ytest.csv",index=False)
 
 files = ["Xtrain.csv","Xtest.csv","ytrain.csv","ytest.csv"]
 
-# Uploading
+# Uploade the Train,Test csv files to the Huggign face
+# https://huggingface.co/datasets/deepacsr/tourism-package-prediction
 for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,

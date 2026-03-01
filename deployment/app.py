@@ -5,10 +5,11 @@ import joblib
 
 import streamlit as st
 
+# Below commented code created for debugging
 #st.title("Test App Running")
 #st.write("If you see this, Docker is fine.")
 
-# Download and load the trained model
+# Download and load the trained model that was aved
 model_path = hf_hub_download(repo_id="deepacsr/tourism-package-prediction", filename="best_package_prediction_model_v1.joblib")
 model = joblib.load(model_path)
 
@@ -41,8 +42,6 @@ NumberOfChildrenVisiting = st.number_input("Number of Children Visiting",min_val
 PitchSatisfactionScore = st.number_input("Pitch Satisfaction Score",min_value=1, max_value=5, value=3, step=1)
 MonthlyIncome = st.number_input("Monthly Income",min_value=100, max_value=100000,value=25000,step = 3000)
 
-
-
 # Assemble input into DataFrame
 input_data = pd.DataFrame([{
     "Age": Age,
@@ -68,14 +67,9 @@ input_data = pd.DataFrame([{
 
 # Predict button
 
-#if st.button("Predict Revenue"):
-#    prediction = model.predict(input_data)[0]
- #   st.subheader("Prediction Result:")
-  #  st.success(f"Customer will buy: **${prediction:,.2f} ")
-
-
 if st.button("Predict Revenue"):
     prediction = model.predict(input_data)[0]
+    # Model predicts based on the input value
 
     st.subheader("Prediction Result:")
 

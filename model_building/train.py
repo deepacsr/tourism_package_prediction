@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import make_column_transformer
 from sklearn.pipeline import make_pipeline
+
 # for model training, tuning, and evaluation
 import xgboost as xgb
 from sklearn.model_selection import GridSearchCV
@@ -11,17 +12,20 @@ from sklearn.metrics import accuracy_score, classification_report, recall_score
 import joblib
 # for creating a folder
 import os
+
 # for hugging face space authentication to upload files
 from huggingface_hub import login, HfApi, create_repo
 from huggingface_hub.utils import RepositoryNotFoundError, HfHubHTTPError
 import mlflow
 
+# Experiment logs to the MLflow tracking server running at local server
 mlflow.set_tracking_uri("http://localhost:5000")
-mlflow.set_experiment("mlops-training-experiment")
+mlflow.set_experiment("MLops-Training-Experiment")
 
+# Initializing the Hugging face API client
 api = HfApi()
 
-
+#Reading the train and test data from hugging face repo
 Xtrain_path = "hf://datasets/deepacsr/tourism-package-prediction/Xtrain.csv"
 Xtest_path = "hf://datasets/deepacsr/tourism-package-prediction/Xtest.csv"
 ytrain_path = "hf://datasets/deepacsr/tourism-package-prediction/ytrain.csv"
@@ -32,7 +36,7 @@ Xtest = pd.read_csv(Xtest_path)
 ytrain = pd.read_csv(ytrain_path)
 ytest = pd.read_csv(ytest_path)
 
-
+#Seggreating the numeric and categorical columns
 numeric_cols = [
     'Age',     # Customer's age
     'CityTier', # The city category based on development, population, and living standards (Tier 1 > Tier 2 > Tier 3)
@@ -63,7 +67,8 @@ categorical_cols = [
 class_weight = ytrain.value_counts()[0] / ytrain.value_counts()[1]
 class_weight
 
-# Define the preprocessing steps
+# Define the preprocessing steps, One hot encoder used for Categorical variables
+# Standard scalar for numerical variables
 preprocessor = make_column_transformer(
     (StandardScaler(), numeric_cols),
     (OneHotEncoder(handle_unknown='ignore'), categorical_cols)
@@ -73,6 +78,7 @@ preprocessor = make_column_transformer(
 xgb_model = xgb.XGBClassifier(scale_pos_weight=class_weight, random_state=42)
 
 # Define hyperparameter grid
+# Paramater Lamda not used to reduce the time for model building
 param_grid = {
     'xgbclassifier__n_estimators': [50, 75, 100],
     'xgbclassifier__max_depth': [2, 3, 4],
@@ -82,7 +88,7 @@ param_grid = {
     #'xgbclassifier__reg_lambda': [0.4, 0.5, 0.6],
 }
 
-# Model pipeline
+# Creating Model pipeline
 model_pipeline = make_pipeline(preprocessor, xgb_model)
 
 # Start MLflow run
